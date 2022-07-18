@@ -1,10 +1,62 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-plugins {
-    id 'com.android.application' version '7.2.0' apply false
-    id 'com.android.library' version '7.2.0' apply false
-    id 'org.jetbrains.kotlin.android' version '1.6.21' apply false
+buildscript {
+    ext.gradleVersion = '7.2.1'
+    ext.kotlinVersion = '1.7.10'
+    ext.navigationVersion = '2.4.2'
+    ext.hiltVersion = '2.42'
+    ext.ktlintVersion = '0.44.0'
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:$gradleVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion"
+    }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+plugins {
+    id "com.diffplug.spotless" version "6.4.1"
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+spotless {
+    kotlin {
+        target "**/*.kt"
+        ktlint(ktlintVersion).userData(['max_line_length': '100'])
+    }
+    format 'misc', {
+        target '**/*.gradle', '**/*.md', '**/.gitignore'
+    }
+    format 'xml', {
+        target '**/*.xml'
+    }
+}
+
+subprojects {
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            jvmTarget = "1.8"
+            // Use experimental APIs
+            freeCompilerArgs += '-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi'
+        }
+    }
+}
+
+// Define versions in a single place
+ext {
+    // Sdk and tools
+    minSdkVersion = 21
+    targetSdkVersion = 32
+    compileSdkVersion = 32
 }

@@ -6,9 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.weather.R
+import dagger.hilt.android.AndroidEntryPoint
 
-
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+@AndroidEntryPoint
+class WeatherActivity : AppCompatActivity(R.layout.activity_main) {
 
     private lateinit var navController: NavController
 

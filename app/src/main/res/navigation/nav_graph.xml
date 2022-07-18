@@ -2,10 +2,9 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/testFragment">
-
+    app:startDestination="@id/weatherFragment">
     <fragment
-        android:id="@+id/testFragment"
+        android:id="@+id/weatherFragment"
         android:name="com.example.weather.ui.WeatherFragment"
-        android:label="TestFragment" />
+        android:label="WeatherFragment" />
 </navigation>

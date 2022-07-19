@@ -1,6 +1,6 @@
 package com.example.weather.util
 
-import com.example.weather.data.Result
+import com.example.weather.model.Result
 import retrofit2.Response
 import retrofit2.Retrofit
 import java.io.IOException

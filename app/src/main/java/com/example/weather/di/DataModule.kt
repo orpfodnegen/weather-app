@@ -1,6 +1,8 @@
 package com.example.weather.di
 
+import com.example.weather.data.LocationRepositoryImpl
 import com.example.weather.data.WeatherRepositoryImpl
+import com.example.weather.data.base.LocationRepository
 import com.example.weather.data.base.WeatherDataSource
 import com.example.weather.data.base.WeatherRepository
 import com.example.weather.data.remote.WeatherRemoteDataSource
@@ -14,16 +16,20 @@ import javax.inject.Singleton
 @Module
 abstract class RepositoryModule {
 
-    @Binds
     @Singleton
+    @Binds
     abstract fun bindWeatherRepository(impl: WeatherRepositoryImpl): WeatherRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindLocationRepository(impl: LocationRepositoryImpl): LocationRepository
 }
 
 @InstallIn(SingletonComponent::class)
 @Module
 abstract class DataSourceModule {
 
-    @Binds
     @Singleton
+    @Binds
     abstract fun bindWeatherRemoteDataSource(impl: WeatherRemoteDataSource): WeatherDataSource
 }

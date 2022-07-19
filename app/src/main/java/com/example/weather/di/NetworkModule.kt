@@ -25,15 +25,18 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(converterFactory: Converter.Factory, okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
+    fun provideRetrofit(
+        converterFactory: Converter.Factory,
+        okHttpClient: OkHttpClient
+    ): Retrofit =
+        Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(converterFactory)
             .client(okHttpClient)
             .build()
-    }
 
     @Provides
+    @Singleton
     fun provideKotlinSerialization(): Converter.Factory {
         val contentType = "application/json".toMediaType()
         val json = Json {
@@ -44,17 +47,17 @@ object NetworkModule {
     }
 
     @Provides
-    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-        return OkHttpClient.Builder()
+    @Singleton
+    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
+        OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(AuthInterceptor(BuildConfig.OPENWEATHERMAP_API_KEY))
             .build()
-    }
 
     @Provides
-    fun provideHTTPLoggingInterceptor(): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor().apply {
+    @Singleton
+    fun provideHTTPLoggingInterceptor(): HttpLoggingInterceptor =
+        HttpLoggingInterceptor().apply {
             setLevel(Level.BODY)
         }
-    }
 }

@@ -1,9 +1,10 @@
 package com.example.weather.data.remote
 
 import android.util.Log
-import com.example.weather.data.Result
 import com.example.weather.data.base.WeatherDataSource
 import com.example.weather.di.IoDispatcher
+import com.example.weather.model.OneCallResponse
+import com.example.weather.model.Result
 import com.example.weather.util.ErrorUtils
 import kotlinx.coroutines.CoroutineDispatcher
 import retrofit2.Response

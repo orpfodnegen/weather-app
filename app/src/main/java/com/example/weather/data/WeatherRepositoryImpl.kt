@@ -2,8 +2,9 @@ package com.example.weather.data
 
 import com.example.weather.data.base.WeatherDataSource
 import com.example.weather.data.base.WeatherRepository
-import com.example.weather.data.remote.OneCallResponse
 import com.example.weather.di.IoDispatcher
+import com.example.weather.model.OneCallResponse
+import com.example.weather.model.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

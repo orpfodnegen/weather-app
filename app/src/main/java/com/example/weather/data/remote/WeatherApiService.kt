@@ -1,5 +1,6 @@
 package com.example.weather.data.remote
 
+import com.example.weather.model.OneCallResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

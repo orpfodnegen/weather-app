@@ -1,6 +1,6 @@
-package com.example.weather.data
+package com.example.weather.model
 
-import com.example.weather.data.Result.Success
+import com.example.weather.model.Result.Success
 import kotlinx.serialization.Serializable
 
 /**
@@ -30,4 +30,4 @@ sealed class Result<out R> {
  * `true` if [Result] is of type [Success] & holds non-null [Success.data].
  */
 val Result<*>.succeeded
-    get() = this is Success && data != null
+    get() = this is Result.Success && data != null

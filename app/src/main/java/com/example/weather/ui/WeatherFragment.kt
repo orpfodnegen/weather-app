@@ -16,8 +16,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.weather.R
 import com.example.weather.databinding.FragmentWeatherBinding
+import com.example.weather.model.CurrentWeather
 import com.example.weather.model.Result
-import com.example.weather.model.network.CurrentWeatherApiModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -52,11 +52,10 @@ class WeatherFragment : Fragment() {
                 viewModel.currentWeather.collect { result ->
 
                     when (result) {
-                        is Result.Success<*> -> {
+                        is Result.Success<CurrentWeather> -> {
                             result.data?.let {
-                                it as CurrentWeatherApiModel
-                                binding.temperatureText.text = it.main.temp.toString()
-                                binding.cityText.text = it.name
+                                binding.temperatureText.text = it.temp
+                                binding.cityText.text = it.city
                             }
                             binding.loading.visibility = View.GONE
                         }

@@ -5,7 +5,7 @@ import com.example.weather.di.IoDispatcher
 import com.example.weather.model.Result
 import com.example.weather.model.network.CurrentWeatherApiModel
 import com.example.weather.model.network.ForecastsApiModel
-import com.example.weather.util.ErrorUtils
+import com.example.weather.util.asResponseError
 import kotlinx.coroutines.CoroutineDispatcher
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -18,24 +18,23 @@ class WeatherNetworkDataSource @Inject constructor(
 
     private val apiService = retrofit.create(WeatherApiService::class.java)
 
-    override suspend fun fetchCurrentWeather(lat: Double, lon: Double)
-        : Result<CurrentWeatherApiModel> =
-        getResponse { apiService.fetchCurrentWeather(lat, lon) }
+    override suspend fun fetchCurrentWeather(
+        lat: Double,
+        lon: Double
+    ): Result<CurrentWeatherApiModel> = getResponse { apiService.fetchCurrentWeather(lat, lon) }
 
     override suspend fun fetchForecast(lat: Double, lon: Double): Result<ForecastsApiModel> {
         TODO("Not yet implemented")
     }
 
-    private suspend fun <T> getResponse(request: suspend () -> Response<T>)
-        : Result<T> {
+    private suspend fun <T> getResponse(request: suspend () -> Response<T>): Result<T> {
         return try {
             val result = request()
 
             if (result.isSuccessful)
                 Result.Success(result.body())
             else {
-                val errorResponse = ErrorUtils.parseError(result, retrofit)
-                return errorResponse!!
+                result.asResponseError(retrofit)!!
             }
         } catch (e: Exception) {
             Result.Error(e)

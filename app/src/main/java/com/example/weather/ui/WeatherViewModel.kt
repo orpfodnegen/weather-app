@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.weather.data.base.LocationRepository
 import com.example.weather.data.base.WeatherRepository
 import com.example.weather.di.ApplicationScope
+import com.example.weather.model.CurrentWeather
 import com.example.weather.model.Result
-import com.example.weather.model.network.CurrentWeatherApiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,8 +23,8 @@ class WeatherViewModel @Inject constructor(
     @ApplicationScope private val externalScope: CoroutineScope
 ) : ViewModel() {
 
-    private var _currentWeather = MutableStateFlow<Result<CurrentWeatherApiModel>>(Result.Loading)
-    val currentWeather: StateFlow<Result<CurrentWeatherApiModel>> = _currentWeather
+    private var _currentWeather = MutableStateFlow<Result<CurrentWeather>>(Result.Loading)
+    val currentWeather: StateFlow<Result<CurrentWeather>> = _currentWeather
 
     fun onForegroundPermissionApproved() {
         viewModelScope.launch {

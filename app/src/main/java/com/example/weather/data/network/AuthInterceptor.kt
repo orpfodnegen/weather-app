@@ -1,6 +1,6 @@
 @file:Suppress("SpellCheckingInspection")
 
-package com.example.weather.data.remote
+package com.example.weather.data.network
 
 import okhttp3.Interceptor
 import okhttp3.Request

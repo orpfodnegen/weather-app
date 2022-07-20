@@ -1,34 +1,15 @@
-package com.example.weather.model
+package com.example.weather.model.network
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class OneCallResponse(
-    val current: Current,
+data class ForecastsApiModel(
     val daily: List<Daily>,
     val hourly: List<Hourly>,
     val lat: Double,
     val lon: Double,
     val timezone: String,
     val timezone_offset: Int
-)
-
-@Serializable
-data class Current(
-    val clouds: Int,
-    val dew_point: Double,
-    val dt: Int,
-    val feels_like: Double,
-    val humidity: Int,
-    val pressure: Int,
-    val sunrise: Int,
-    val sunset: Int,
-    val temp: Double,
-    val uvi: Double,
-    val visibility: Int,
-    val weather: List<WeatherItem>,
-    val wind_deg: Int,
-    val wind_speed: Double
 )
 
 @Serializable
@@ -43,7 +24,7 @@ data class Daily(
     val moonset: Int,
     val pop: Double,
     val pressure: Int,
-    val rain: Double? = null,
+    val rain: Double,
     val sunrise: Int,
     val sunset: Int,
     val temp: Temp,
@@ -63,6 +44,7 @@ data class Hourly(
     val humidity: Int,
     val pop: Double,
     val pressure: Int,
+    val rain: Rain,
     val temp: Double,
     val uvi: Double,
     val visibility: Int,
@@ -70,14 +52,6 @@ data class Hourly(
     val wind_deg: Int,
     val wind_gust: Double,
     val wind_speed: Double
-)
-
-@Serializable
-data class WeatherItem(
-    val description: String,
-    val icon: String,
-    val id: Int,
-    val main: String
 )
 
 @Serializable
@@ -96,4 +70,9 @@ data class Temp(
     val min: Double,
     val morn: Double,
     val night: Double
+)
+
+@Serializable
+data class Rain(
+    val `1h`: Double
 )

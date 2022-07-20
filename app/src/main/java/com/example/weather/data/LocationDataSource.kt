@@ -17,8 +17,8 @@ class LocationDataSource @Inject constructor(
     private val client: FusedLocationProviderClient
 ) {
     private val request = LocationRequest.create().apply {
-        interval = TimeUnit.SECONDS.toMillis(3)
-        fastestInterval = TimeUnit.SECONDS.toMillis(3)
+        interval = TimeUnit.SECONDS.toMillis(updateIntervalMinutes)
+        fastestInterval = TimeUnit.SECONDS.toMillis(fastestUpdateIntervalMinutes)
         priority = Priority.PRIORITY_HIGH_ACCURACY
     }
 
@@ -35,7 +35,6 @@ class LocationDataSource @Inject constructor(
     }
 
     companion object {
-        private const val TAG = "LocationDataSource"
         private const val updateIntervalMinutes = Config.UPDATE_INTERVAL_MINUTES
         private const val fastestUpdateIntervalMinutes = Config.FASTEST_UPDATE_INTERVAL_MINUTES
     }

@@ -9,12 +9,13 @@
     </option>
   </component>
   <component name="EntryPointsManager">
-    <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="com.example.weather.di.IoDispatcher" />
-      <item index="1" class="java.lang.String" itemvalue="dagger.Binds" />
+    <list size="6">
+      <item index="0" class="java.lang.String" itemvalue="com.example.weather.di.ApplicationScope" />
+      <item index="1" class="java.lang.String" itemvalue="com.example.weather.di.IoDispatcher" />
       <item index="2" class="java.lang.String" itemvalue="dagger.Binds" />
-      <item index="3" class="java.lang.String" itemvalue="dagger.hilt.InstallIn" />
+      <item index="3" class="java.lang.String" itemvalue="dagger.Binds" />
       <item index="4" class="java.lang.String" itemvalue="dagger.hilt.InstallIn" />
+      <item index="5" class="java.lang.String" itemvalue="dagger.hilt.InstallIn" />
     </list>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">

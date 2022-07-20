@@ -16,8 +16,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.weather.R
 import com.example.weather.databinding.FragmentWeatherBinding
-import com.example.weather.model.OneCallResponse
 import com.example.weather.model.Result
+import com.example.weather.model.network.CurrentWeatherApiModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -38,11 +38,11 @@ class WeatherFragment : Fragment() {
     ): View {
         if (foregroundPermissionApproved()) {
             viewModel.onForegroundPermissionApproved()
+            subscribeUi()
         } else {
             requestForegroundPermissions()
         }
 
-        subscribeUi()
         return binding.root
     }
 
@@ -54,8 +54,9 @@ class WeatherFragment : Fragment() {
                     when (result) {
                         is Result.Success<*> -> {
                             result.data?.let {
-                                it as OneCallResponse
-                                binding.temperatureText.text = it.current.feels_like.toString()
+                                it as CurrentWeatherApiModel
+                                binding.temperatureText.text = it.main.temp.toString()
+                                binding.cityText.text = it.name
                             }
                             binding.loading.visibility = View.GONE
                         }
@@ -92,6 +93,7 @@ class WeatherFragment : Fragment() {
     ) { isGranted: Boolean ->
         if (isGranted) {
             viewModel.onForegroundPermissionApproved()
+            subscribeUi()
         } else {
             Snackbar.make(
                 binding.fragmentWeather,

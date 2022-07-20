@@ -1,7 +1,7 @@
 package com.example.weather.di
 
 import com.example.weather.BuildConfig
-import com.example.weather.data.remote.AuthInterceptor
+import com.example.weather.data.network.AuthInterceptor
 import com.example.weather.util.Config
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module

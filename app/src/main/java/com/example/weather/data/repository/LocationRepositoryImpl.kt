@@ -1,8 +1,11 @@
-package com.example.weather.data
+@file:Suppress("CanBeParameter")
 
+package com.example.weather.data.repository
+
+import com.example.weather.data.LocationDataSource
 import com.example.weather.data.base.LocationRepository
 import com.example.weather.di.ApplicationScope
-import com.example.weather.model.MapLocation
+import com.example.weather.model.Location
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -14,7 +17,7 @@ class LocationRepositoryImpl @Inject constructor(
     @ApplicationScope private val externalScope: CoroutineScope
 ) : LocationRepository {
 
-    override val location: Flow<MapLocation> = dataSource.locationSource.shareIn(
+    override val location: Flow<Location> = dataSource.locationSource.shareIn(
         scope = externalScope,
         started = SharingStarted.WhileSubscribed(5000)
     )

@@ -2,22 +2,17 @@
 
 package com.example.weather.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather.data.base.LocationRepository
 import com.example.weather.data.base.WeatherRepository
 import com.example.weather.di.ApplicationScope
-import com.example.weather.model.MapLocation
-import com.example.weather.model.OneCallResponse
 import com.example.weather.model.Result
+import com.example.weather.model.network.CurrentWeatherApiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,25 +23,19 @@ class WeatherViewModel @Inject constructor(
     @ApplicationScope private val externalScope: CoroutineScope
 ) : ViewModel() {
 
-    private val _currentLocation = MutableStateFlow(MapLocation())
-
-    val currentWeather: StateFlow<Result<OneCallResponse>> = _currentLocation.flatMapLatest {
-        weatherRepository.getWeatherAndForecasts(it.latitude, it.longitude)
-    }.stateIn(
-        scope = viewModelScope,
-        started = WhileSubscribed(5000),
-        initialValue = Result.Loading
-    )
+    private var _currentWeather = MutableStateFlow<Result<CurrentWeatherApiModel>>(Result.Loading)
+    val currentWeather: StateFlow<Result<CurrentWeatherApiModel>> = _currentWeather
 
     fun onForegroundPermissionApproved() {
         viewModelScope.launch {
-            locationRepository.location.collect {
-                Log.d(TAG, it.toString())
+            locationRepository.location.collect { location ->
+                weatherRepository.getCurrentWeather(
+                    location.latitude,
+                    location.longitude
+                ).collect { currentWeather ->
+                    _currentWeather.emit(currentWeather)
+                }
             }
         }
-    }
-
-    companion object {
-        private const val TAG = "WeatherViewModel"
     }
 }

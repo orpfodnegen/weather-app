@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class WeatherNetworkDataSource @Inject constructor(
     private val retrofit: Retrofit,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : WeatherDataSource {
 
     private val apiService = retrofit.create(WeatherApiService::class.java)
@@ -31,9 +31,9 @@ class WeatherNetworkDataSource @Inject constructor(
         return try {
             val result = request()
 
-            if (result.isSuccessful)
+            if (result.isSuccessful) {
                 Result.Success(result.body())
-            else {
+            } else {
                 result.asResponseError(retrofit)!!
             }
         } catch (e: Exception) {

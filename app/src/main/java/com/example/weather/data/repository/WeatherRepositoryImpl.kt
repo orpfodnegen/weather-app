@@ -23,7 +23,6 @@ class WeatherRepositoryImpl @Inject constructor(
     override fun getCurrentWeather(lat: Double, lon: Double): Flow<Result<CurrentWeather>> {
         return flow {
             when (val result = remoteDataSource.fetchCurrentWeather(lat, lon)) {
-
                 is Result.Success<CurrentWeatherApiModel> -> {
                     emit(Result.Success(result.data?.asModel()))
                 }

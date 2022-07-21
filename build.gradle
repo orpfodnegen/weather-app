@@ -3,7 +3,6 @@ buildscript {
     ext.kotlinVersion = '1.7.10'
     ext.navigationVersion = '2.4.2'
     ext.hiltVersion = '2.42'
-    ext.ktlintVersion = '0.44.0'
 
     repositories {
         google()
@@ -20,26 +19,13 @@ buildscript {
 }
 
 plugins {
-    id "com.diffplug.spotless" version "6.4.1"
+    id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
 }
 
 allprojects {
     repositories {
         google()
         mavenCentral()
-    }
-}
-
-spotless {
-    kotlin {
-        target "**/*.kt"
-        ktlint(ktlintVersion).userData(['max_line_length': '100'])
-    }
-    format 'misc', {
-        target '**/*.gradle', '**/*.md', '**/.gitignore'
-    }
-    format 'xml', {
-        target '**/*.xml'
     }
 }
 

@@ -5,7 +5,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 
 fun Response<*>.asResponseError(retrofit: Retrofit): Result.ResponseError? {
-
     val converter = retrofit.responseBodyConverter<Result.ResponseError>(
         Result.ResponseError::class.java,
         arrayOfNulls(0)
